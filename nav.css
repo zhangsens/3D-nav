@@ -1,0 +1,82 @@
+body {
+    background-color: #012345;
+    overflow: hidden;
+}
+
+div {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform-style: preserve-3d;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+div a {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 80px;
+    text-align: center;
+    border: 3px solid #000;
+    box-sizing: border-box;
+    transition: all 3s ease;
+}
+
+div a img {
+    height: 100%;
+    width: 100%;
+}
+
+.front {
+    transform: translateZ(50px);
+}
+
+.front:hover {
+    transform: translateZ(80px);
+}
+
+.back {
+    transform: translateZ(-50px);
+}
+
+.back:hover {
+    transform: translateZ(-80px);
+}
+
+.left {
+    transform: translateX(50px) rotateY(90deg);
+}
+
+.left:hover {
+    transform: translateX(80px) rotateY(90deg);
+}
+
+.right {
+    transform: translateX(-50px) rotateY(-90deg);
+}
+
+.right:hover {
+    transform: translateX(-80px) rotateY(-90deg);
+}
+
+.up {
+    transform: translateY(50px) rotateX(90deg);
+}
+
+.up:hover {
+    transform: translateY(80px) rotateX(90deg);
+}
+
+.down {
+    transform: translateY(-50px) rotateX(-90deg);
+}
+
+.down:hover {
+    transform: translateY(-80px) rotateX(-90deg);
+}
