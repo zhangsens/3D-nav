@@ -1,9 +1,8 @@
-"use s"
+"use strict"
 const body = document.querySelector("body");
 const box = document.querySelector("#box");
-var rotateX = rotateY = 0;
-var scroll, speed;
-var clientX, clientY;
+var roll, speed;
+var rotateX, rotateY, clientX, clientY, target;
 
 function animation() {
     var x = rotateX + speed;
@@ -11,32 +10,30 @@ function animation() {
     rotateX = x < 360 ? x : x - 360;
     rotateY = y < 360 ? y : y - 360;
     box.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    scroll = requestAnimationFrame(animation);
+    roll = requestAnimationFrame(animation);
     if (speed <= 0) {
         speed = 0;
-        cancelAnimationFrame(scroll);
-    } else {
-        speed -= 1;
+        cancelAnimationFrame(roll);
     }
 }
 
-function rolling() {
-    speed = Math.random() * 50 + 50;
-    requestAnimationFrame(animation);
-}
-
-rolling();
-var roll = setInterval(rolling, 5000);
+speed = 2;
+rotateX = rotateY = 0;
+roll = requestAnimationFrame(animation);
 
 box.onmousedown = function(e) {
-    clearInterval(roll);
-    e.preventDefault();
-    clientX = e.clientX;
-    clientY = e.clientY;
+    cancelAnimationFrame(roll);
+    if (e.target != this) {
+        target = 1;
+        clientX = e.clientX;
+        clientY = e.clientY;
+    } else {
+        clientX = clientY = undefined;
+    }
 }
 body.onmousemove = function(e) {
-    e.preventDefault();
-    if (e.buttons == 1) {
+    if (e.buttons == 1 && target && clientX && clientY) {
+        e.preventDefault();
         rotateX += clientY - e.clientY;
         rotateY += e.clientX - clientX;
         clientX = e.clientX;
@@ -45,6 +42,8 @@ body.onmousemove = function(e) {
     }
 }
 body.onmouseup = function(e) {
-    e.preventDefault();
-    roll = setInterval(rolling, 5000);
+    if (target == 1) {
+        roll = requestAnimationFrame(animation);
+        target = 0;
+    }
 }
